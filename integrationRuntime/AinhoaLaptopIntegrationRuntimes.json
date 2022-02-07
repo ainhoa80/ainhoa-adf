@@ -1,0 +1,7 @@
+{
+	"name": "AinhoaLaptopIntegrationRuntimes",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "entorno de ejecución de integración en el portátil Ainhoa"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "Sql_ainhoalaptop",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Conexión de la base de datos SQL server desde mi portátil",
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=ainhoadb-server.database.windows.net;initial catalog=ainhoaDB1;user id=administrador",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjNjVmOGVhOS0wNGZiLTRlZjgtYTc5NC1lMmE2M2U2MDk3NzkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AinhoaLaptopIntegrationRuntimes",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

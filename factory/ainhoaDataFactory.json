@@ -1,0 +1,9 @@
+{
+	"name": "ainhoaDataFactory",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "48206b8a-c7b4-4749-8b2d-e315dc92f9ba",
+		"tenantId": "b5e7ab8d-dd67-4ec2-bae5-e6a4f6474a64"
+	}
+}

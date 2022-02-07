@@ -1,0 +1,39 @@
+{
+	"name": "SqlServerTableMiconexion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Sql_ainhoalaptop",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "StudentId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CourseId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Grade",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Attempt",
+				"type": "tinyint",
+				"precision": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Credit"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

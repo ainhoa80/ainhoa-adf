@@ -1,0 +1,17 @@
+{
+	"name": "Conexion_Azure",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Pasamos tabla ",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=ainhoadb-server.database.windows.net;initial catalog=ainhoaDB1;user id=administrador",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyOTZlYmIzZi0xNWVhLTQwMTMtYjAwYi1mNDAzNzJmYTM0YTUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AinhoaLaptopIntegrationRuntimes",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

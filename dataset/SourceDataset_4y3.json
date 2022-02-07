@@ -1,0 +1,22 @@
+{
+	"name": "SourceDataset_4y3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_table": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Course"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
