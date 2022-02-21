@@ -1,0 +1,1920 @@
+{
+	"name": "CopyPipeline_TablaBosonit",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_jv0",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_jv0",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "dbo.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{item().destination.tableName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "AzureTableSink",
+									"azureTableInsertType": "merge",
+									"writeBatchSize": 10000
+								},
+								"enableStaging": false,
+								"validateDataConsistency": true,
+								"logSettings": {
+									"enableCopyActivityLog": true,
+									"copyActivityLogSettings": {
+										"logLevel": "Warning",
+										"enableReliableLogging": false
+									},
+									"logLocationSettings": {
+										"linkedServiceName": {
+											"referenceName": "ADLS_ainhoadatalake",
+											"type": "LinkedServiceReference"
+										},
+										"path": "lego"
+									}
+								},
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_jv0",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_jv0",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_tableName": "@item().destination.tableName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "Asignaciones"
+						},
+						"destination": {
+							"tableName": "Asignaciones"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "IDPersonal",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDPersonal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDProyecto",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDProyecto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaInicioAsignacion",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaInicioAsignacion",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaFinAsignacion",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaFinAsignacion",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "PrecioHoraTM",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "PrecioHoraTM",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "ID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "RecursoBloqueado",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "RecursoBloqueado",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "PorcentajeAsignacion",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "PorcentajeAsignacion",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "EstadoAsignacion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EstadoAsignacion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Descripcion",
+											"type": "String",
+											"physicalType": "ntext"
+										},
+										"sink": {
+											"name": "Descripcion",
+											"type": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "Empleados"
+						},
+						"destination": {
+							"tableName": "Empleados"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Empresa",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Empresa",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DNI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DNI",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NumeroSS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NumeroSS",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDPersonal",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDPersonal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Nombre",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Nombre",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Apellidos",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Apellidos",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sexo",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Sexo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaNacimiento",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaNacimiento",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Estudios",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Estudios",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Correo",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Correo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TelefonoTrabajo",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "TelefonoTrabajo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TelefonoMovilExterno",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "TelefonoMovilExterno",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Oficina",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Oficina",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Direccion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Direccion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Ciudad",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Ciudad",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Provincia",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Provincia",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CodigoPostal",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CodigoPostal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Pais",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Pais",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Situacion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Situacion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IndicadorActivo",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IndicadorActivo",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaIncorporacion",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaIncorporacion",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaBaja",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaBaja",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Responsable",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Responsable",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "CoachAsignado",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CoachAsignado",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Bonificado",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Bonificado",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IDJornada",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDJornada",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDCategoria",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDCategoria",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDProyectoCoste",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDProyectoCoste",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ReporteHoras",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ReporteHoras",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "PerfilMyNFQ",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PerfilMyNFQ",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Notas",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Notas",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "GrupoTecnologia",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "GrupoTecnologia",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AmbitoPrincipal",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AmbitoPrincipal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AmbitoSecundario",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AmbitoSecundario",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Staff",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Staff",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ModoFacturacion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ModoFacturacion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Id_Grupotecnologia",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Id_Grupotecnologia",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Id_AmbitoPrincipal",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Id_AmbitoPrincipal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Id_AmbitoSecundario",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Id_AmbitoSecundario",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Id_Company",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Id_Company",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Categoria",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Categoria",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaDesde",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "FechaDesde",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "PreferenciaVivienda",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PreferenciaVivienda",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Disponibilidad",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "Disponibilidad",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "EstudiosEnCurso",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EstudiosEnCurso",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NivelIngles",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NivelIngles",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FTE",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "FTE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CentroTrabajo",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CentroTrabajo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CosteMesAnterior",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "CosteMesAnterior",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "TecnologiaSec",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "TecnologiaSec",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IngresosMesEnCurso",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "IngresosMesEnCurso",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "IngresosMesAnterior",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "IngresosMesAnterior",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "GastosCosteEstructura",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "GastosCosteEstructura",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "TarifaMedia",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "TarifaMedia",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "GradoAsignacionSuma",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "GradoAsignacionSuma",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "TRoNPendientesPast",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "TRoNPendientesPast",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TRoNPendientesFuturo",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "TRoNPendientesFuturo",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Vacaciones",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "Vacaciones",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "StaffSubestado",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "StaffSubestado",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TarifaMediaES",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "TarifaMediaES",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "GradoAsignacionSumaES",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "GradoAsignacionSumaES",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "FinDeEstudios",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FinDeEstudios",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "InversionTecnologia",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "InversionTecnologia",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EsStaffReal",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "EsStaffReal",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "CosteBrutoAnual",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "CosteBrutoAnual",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "DiasEnLaEmpresa",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DiasEnLaEmpresa",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaActual",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaActual",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "MinFecha",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "MinFecha",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "MaxFecha",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "MaxFecha",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "TRoNPend",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "TRoNPend",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaInicioInvProd",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaInicioInvProd",
+											"type": "DateTime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "nfq_Timesheets"
+						},
+						"destination": {
+							"tableName": "Timesheets"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "IDProyecto",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDProyecto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDCliente",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDCliente",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DNI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DNI",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Empleado",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Empleado",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Email",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "diaSemana",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "diaSemana",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Fecha",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "Fecha",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Estados",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Estados",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Localizacion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Localizacion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Notas",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Notas",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Proyectos",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Proyectos",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Horas",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "Horas",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "Tarifa",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "Tarifa",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "IDPersonal",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDPersonal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaInicioAsignacion",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "FechaInicioAsignacion",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaFinAsignacion",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "FechaFinAsignacion",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "EstadoAsignacion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EstadoAsignacion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaRev",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaRev",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "CosteHoraSalario",
+											"type": "Double",
+											"physicalType": "float"
+										},
+										"sink": {
+											"name": "CosteHoraSalario",
+											"type": "Double"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "Proyectos"
+						},
+						"destination": {
+							"tableName": "Proyectos"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "IDEmpresa",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDEmpresa",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasCompany",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasCompany",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDProyecto",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDProyecto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasProyecto",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasProyecto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DescripcionExt",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DescripcionExt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDCliente",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDCliente",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProyectoCompartido",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "ProyectoCompartido",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "IDEmpresaSocia",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDEmpresaSocia",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDClienteFact",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDClienteFact",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDEmpresaFact",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDEmpresaFact",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDPersonalResponsable",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDPersonalResponsable",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CargableHoras",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "CargableHoras",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "CargableGastos",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "CargableGastos",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "CargableFacturas",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "CargableFacturas",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "TipoProyecto",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "TipoProyecto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ModoFacturacion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ModoFacturacion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Estado",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Estado",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaCierreVenta",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaCierreVenta",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaInicio",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaInicio",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaReal",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "FechaReal",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FechaCierrePrev",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "FechaCierrePrev",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Area",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Area",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Observaciones",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Observaciones",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "HorasNFQ",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "HorasNFQ",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IngresosNFQ",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "IngresosNFQ",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PresupuestoGastos",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "PresupuestoGastos",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MargenVenta",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "MargenVenta",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MargenFinal",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "MargenFinal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CargableFestivos",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "CargableFestivos",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "CargableVacaciones",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "CargableVacaciones",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "NombreContactoFacturacionDireccion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NombreContactoFacturacionDireccion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DepartamentoContactoFacturacionDireccion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DepartamentoContactoFacturacionDireccion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IDProyectoEspejo",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDProyectoEspejo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "GradoAvance",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "GradoAvance",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CargableNomina",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "CargableNomina",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "NoClienteStaff",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "NoClienteStaff",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "NoClienteInversion",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "NoClienteInversion",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "IDProyectoClon",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IDProyectoClon",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Divisa",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Divisa",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "OverTime",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "OverTime",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "TipoProyectoTasa",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "TipoProyectoTasa",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "idCar",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "idCar",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Desc_CAR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Desc_CAR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Desc_SubCAR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Desc_SubCAR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ResponsabeProyecto",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ResponsabeProyecto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IngresosTotales",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "IngresosTotales",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasProyectoCons",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasProyectoCons",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IdGrpProyCons",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IdGrpProyCons",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasClienteVenta",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasClienteVenta",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasClienteVentaCons",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasClienteVentaCons",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "idclienteventa",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "idclienteventa",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IdClienteVentaCons",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IdClienteVentaCons",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NaturalezaCentro",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NaturalezaCentro",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasClienteFact",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasClienteFact",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AliasClienteFactCons",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AliasClienteFactCons",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CritIngr",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CritIngr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Recurrente",
+											"type": "Single",
+											"physicalType": "real"
+										},
+										"sink": {
+											"name": "Recurrente",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "b_NonBillableHours",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "b_NonBillableHours",
+											"type": "Boolean"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-02-07T19:16:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
